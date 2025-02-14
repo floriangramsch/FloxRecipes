@@ -1,22 +1,12 @@
 import ContentTitle from "./ContentTitle";
-import {
-  Box,
-  Checkbox,
-  Divider,
-  Grid2,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import {
   AddBoxOutlined,
   IndeterminateCheckBoxOutlined,
 } from "@mui/icons-material";
 import { useEffect, useRef, useState } from "react";
 import { useRecipeStore } from "@/app/stores/recipeStore";
+import IngredientsTable from "../Table/IngredientsTable";
 
 export default function Recipe() {
   const { currentRecipe } = useRecipeStore();
@@ -54,49 +44,17 @@ export default function Recipe() {
               onClick={() => setPortionSize((oldVal) => oldVal + 1)}
             />
           </Box>
-          <Box
-            sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            {/* <Grid2 container columnSpacing={2} rowSpacing={1} columns={2}>
-              {content.ingredients.map((ing) => (
-                <>
-                  <Grid2 size={1} display='absolute' left={8}>
-                    <Checkbox sx={{ p: 0 }} />
-                    {ing.count} {ing.metric}
-                  </Grid2>
-                  <Grid2 size={1}>{ing.ingredient}</Grid2>
-                </>
-              ))}
-            </Grid2> */}
-            <List className="text-nowrap">
-              {currentRecipe.ingredients.map((ing, index) => (
-                <ListItem disablePadding key={index}>
-                  <ListItemIcon sx={{ minWidth: 0, mr: "6px" }}>
-                    <Checkbox sx={{ p: 0 }} />
-                  </ListItemIcon>
-                  <ListItemText>
-                    <Grid2 container spacing={12}>
-                      <Grid2 size={6}>
-                        {parseFloat(
-                          (
-                            ing.count *
-                            (portionSize / originalPortionSize.current)
-                          ).toFixed(2)
-                        )}{" "}
-                        {ing.metric}
-                      </Grid2>
-                      <Grid2 size={6}>{ing.ingredient}</Grid2>
-                    </Grid2>
-                  </ListItemText>
-                </ListItem>
-              ))}
-            </List>
-          </Box>
-          <Divider className="w-full" />
+
+          <IngredientsTable
+            ingredients={currentRecipe.ingredients.map((ingredient) => ({
+              count:
+                ingredient.count * (portionSize / originalPortionSize.current),
+              metric: ingredient.metric,
+              ingredient: ingredient.ingredient,
+            }))}
+          />
+
+          <Divider />
           <Box
             sx={{
               width: "100%",

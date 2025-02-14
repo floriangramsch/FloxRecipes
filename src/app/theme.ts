@@ -2,9 +2,10 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark', // oder 'dark'
+    mode: 'dark',
     primary: {
-      main: '#1976d2', // Blauton
+      main: '#9900ff', // lilaton
+      // main: '#1976d2', // Blauton
     },
     secondary: {
       main: '#dc004e', // Rotton
